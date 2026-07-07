@@ -2,11 +2,15 @@ import pandas as pd
 
 food_data = pd.read_csv("food_data.csv")
 
+def calculate_nutrients(nutrient, user_portion, serving_size):
+    nutrition_value = (user_portion / serving_size) * nutrient
+    return nutrition_value
+
 def nutrition(dish):
     result = food_data[food_data["dish"] == dish]
 
     if len(result) == 0:
-        print("Sorry! We do not have nutrition information for that dis at this time.")
+        print("Sorry! We do not have nutrition information for that dish at this time.")
     else: 
         if result["is_halal"].values[0] == 1:
             halal = "Yes"
@@ -33,17 +37,24 @@ def nutrition(dish):
         else:
             fasting_friendly = "No"
 
-        print(f"\nNutrition information for {dish}:")
-        print(f"Calories: {result['calories'].values[0]}")
-        print(f"Protein: {result['protein'].values[0]}g")
-        print(f"Carbohydrates: {result['carbs'].values[0]}g")
-        print(f"Fat: {result['fat'].values[0]}g")
+        user_portion = float(input(f"How many grams of {dish} did you eat? "))
+        serving_size = result['serving_size'].values[0]
+
+        calories = calculate_nutrients(result['calories'].values[0], user_portion, serving_size)
+        protein = calculate_nutrients(result['protein'].values[0], user_portion, serving_size)
+        carbs = calculate_nutrients(result['carbs'].values[0], user_portion, serving_size)
+        fat = calculate_nutrients(result['fat'].values[0], user_portion, serving_size)
+
+        print(f"\nNutrition information for {dish} ({user_portion}g):")
+        print(f"Calories: {round(calories)}")
+        print(f"Protein: {round(protein)}g")
+        print(f"Carbohydrates: {round(carbs)}g")
+        print(f"Fat: {round(fat)}g")
         print(f"Halal: {halal}")
         print(f"Vegan: {vegan}")
         print(f"Vegetarian: {vegetarian}")
         print(f"Sikh Friendly: {sikh_friendly}")
         print(f"Fasting Friendly: {fasting_friendly}")
-              
 
 query = input("Enter a dish name: ")
-nutrition(query) 
+nutrition(query)
