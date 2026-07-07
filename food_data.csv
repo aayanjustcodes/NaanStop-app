@@ -1,0 +1,16 @@
+dish,calories,protein,carbs,fat,is_vegetarian,is_vegan,is_halal,is_sikh_friendly,is_fasting_friendly
+biryani,350,18,45,10,0,0,1,1,0
+dal,180,12,25,4,1,1,1,1,1
+roti,120,3,20,2,1,1,1,1,1
+samosa,260,5,28,14,1,0,1,1,0
+butter_chicken,430,28,12,30,0,0,1,0,0
+palak_paneer,300,15,12,22,1,0,1,1,0
+dosa,170,4,30,3,1,1,1,1,0
+idli,140,4,28,1,1,1,1,1,0
+chole,280,13,38,9,1,1,1,1,1
+paratha,260,6,32,12,1,0,1,1,0
+gulab_jamun,310,4,42,14,1,0,1,1,0
+chicken_tikka,250,30,4,13,0,0,1,0,0
+rice,205,4,45,0,1,1,1,1,1
+chicken_karahi,400,32,8,27,0,0,1,0,0
+lassi,220,6,30,8,1,0,1,1,0
