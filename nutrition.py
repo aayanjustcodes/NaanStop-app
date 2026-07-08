@@ -56,5 +56,5 @@ def nutrition(dish):
         print(f"Sikh Friendly: {sikh_friendly}")
         print(f"Fasting Friendly: {fasting_friendly}")
 
-query = input("Enter a dish name: ")
+query = input("Enter a dish name: ").to_lower()
 nutrition(query)
