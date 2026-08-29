@@ -3,6 +3,7 @@ from nutrition import nutrition
 from filter import diet_filter
 from user_profile import calculate_calorie_target
 from meal_log import log_meal
+from dashboard import get_today_summary
 
 st.title("NaanStop 🍛")
 st.write("Your desi nutrition tracker.")
@@ -11,7 +12,8 @@ page = st.sidebar.selectbox("What do you want to do?", [
     "Nutrition Lookup",
     "Diet Filter",
     "Calorie Target Calculator",
-    "Log a Meal"
+    "Log a Meal",
+    "Dashboard"
 ])
 
 if page == "Nutrition Lookup":
@@ -71,3 +73,21 @@ elif page == "Log a Meal":
             st.error("Sorry! We do not have nutrition information for that dish at this time.")
         else:
             st.success(f"Logged {log_entry['user_portion']}g of {log_entry['dish'].replace('_', ' ')} — {log_entry['calories']} calories")
+
+elif page == "Dashboard":
+    st.header("Dashboard")
+    today_summary = get_today_summary()
+    if today_summary is None:
+        st.info("No meals logged today.")
+    else:
+        st.subheader("Today's Summary:")
+        st.write(f"Total Calories: {today_summary['total_calories']}")
+        st.write(f"Total Protein: {today_summary['total_protein']}g")
+        st.write(f"Total Carbohydrates: {today_summary['total_carbs']}g")
+        st.write(f"Total Fat: {today_summary['total_fat']}g")
+
+        st.subheader("Today's Meals:")
+        st.dataframe(today_summary['today_log'][["timestamp", "dish", "user_portion", "calories"]])
+
+        st.subheader("Calories per Meal:")
+        st.bar_chart(today_summary['today_log'].set_index("dish")["calories"])
