@@ -75,3 +75,4 @@ South Asian cuisine is eaten by over 1.5 billion people globally, yet nutrition 
 ---
 
 *Built by Aayan Ali*
+*Original concept: Aayan Ali, Roshan Srivatsan*
