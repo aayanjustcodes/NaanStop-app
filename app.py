@@ -4,6 +4,7 @@ from filter import diet_filter
 from user_profile import calculate_calorie_target
 from meal_log import log_meal
 from dashboard import get_today_summary
+from streak_counter import get_streak
 
 st.title("NaanStop 🍛")
 st.write("Your desi nutrition tracker.")
@@ -15,6 +16,9 @@ page = st.sidebar.selectbox("What do you want to do?", [
     "Log a Meal",
     "Dashboard"
 ])
+
+streak = get_streak()
+st.sidebar.markdown(f"🔥 **{streak} day streak**")
 
 if page == "Nutrition Lookup":
     st.header("Nutrition Lookup")
