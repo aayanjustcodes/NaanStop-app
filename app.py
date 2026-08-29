@@ -2,6 +2,7 @@ import streamlit as st
 from nutrition import nutrition
 from filter import diet_filter
 from user_profile import calculate_calorie_target
+from meal_log import log_meal
 
 st.title("NaanStop 🍛")
 st.write("Your desi nutrition tracker.")
@@ -9,7 +10,8 @@ st.write("Your desi nutrition tracker.")
 page = st.sidebar.selectbox("What do you want to do?", [
     "Nutrition Lookup",
     "Diet Filter",
-    "Calorie Target Calculator"
+    "Calorie Target Calculator",
+    "Log a Meal"
 ])
 
 if page == "Nutrition Lookup":
@@ -59,3 +61,13 @@ elif page == "Calorie Target Calculator":
         calorie_target = calculate_calorie_target(weight, height, age, gender, activity_level)
         st.success(f"Your daily calorie target is: {calorie_target} calories.")
 
+elif page == "Log a Meal":
+    st.header("Log a Meal")
+    dish = st.text_input("Enter the dish name (e.g. biryani, dal, roti):")
+    user_portion = st.number_input("Enter the portion size in grams:", min_value=1, value=100)
+    if st.button("Log Meal"):
+        log_entry = log_meal(dish.lower().replace(" ", "_"), user_portion)
+        if log_entry is None:
+            st.error("Sorry! We do not have nutrition information for that dish at this time.")
+        else:
+            st.success(f"Logged {log_entry['user_portion']}g of {log_entry['dish'].replace('_', ' ')} — {log_entry['calories']} calories")
