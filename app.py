@@ -1,13 +1,15 @@
 import streamlit as st
 from nutrition import nutrition
 from filter import diet_filter
+from user_profile import calculate_calorie_target
 
 st.title("NaanStop 🍛")
 st.write("Your desi nutrition tracker.")
 
 page = st.sidebar.selectbox("What do you want to do?", [
     "Nutrition Lookup",
-    "Diet Filter"
+    "Diet Filter",
+    "Calorie Target Calculator"
 ])
 
 if page == "Nutrition Lookup":
@@ -43,3 +45,17 @@ elif page == "Diet Filter":
             st.subheader(f"Dishes compatible with {preference.replace('_', ' ').title()}:")
             for dish in result:
                 st.write(f"- {dish.replace('_', ' ').title()}")
+
+elif page == "Calorie Target Calculator":
+    st.header("Calorie Target Calculator")
+    weight = st.number_input("Enter your weight in kg:", min_value=1.0, value=70.0)
+    height = st.number_input("Enter your height in cm:", min_value=1.0, value=170.0)
+    age = st.number_input("Enter your age in years:", min_value=1, value=25)
+    gender = st.selectbox("Select your gender:", ["male", "female"])
+    activity_level = st.selectbox("Select your activity level:", [
+        "sedentary", "light", "moderate", "active", "very active"
+    ], format_func=lambda x: x.title())
+    if st.button("Calculate Calorie Target"):
+        calorie_target = calculate_calorie_target(weight, height, age, gender, activity_level)
+        st.success(f"Your daily calorie target is: {calorie_target} calories.")
+
