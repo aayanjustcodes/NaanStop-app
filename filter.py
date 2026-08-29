@@ -6,10 +6,16 @@ def diet_filter(preference):
     result = food_data[food_data["is_" + preference] == 1]
     
     if len(result) == 0:
+        return None
+    else:
+        return result["dish"].tolist()
+
+if __name__ == "__main__":
+    preference = input("Enter your dietary preference (halal/vegan/vegetarian/sikh_friendly/fasting_friendly): ").lower()
+    result = diet_filter(preference)
+    if result is None:
         print("No dishes found for that dietary preference.")
     else:
-        print(f"\nDishes compatible with {preference}:")
-        print(result["dish"])
-
-preference = input("Enter your dietary preference (halal/vegan/vegetarian/sikh_friendly/fasting_friendly): ").lower()
-diet_filter(preference)
+        print(f"\nCompatible dishes:")
+        for dish in result:
+            print(f"- {dish}")
