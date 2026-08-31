@@ -5,6 +5,7 @@ from user_profile import calculate_calorie_target
 from meal_log import log_meal
 from dashboard import get_today_summary
 from streak_counter import get_streak
+from predict import predict_dish
 
 st.title("NaanStop 🍛")
 st.write("Your desi nutrition tracker.")
@@ -14,7 +15,8 @@ page = st.sidebar.selectbox("What do you want to do?", [
     "Diet Filter",
     "Calorie Target Calculator",
     "Log a Meal",
-    "Dashboard"
+    "Dashboard",
+    "Photo Recognition"
 ])
 
 streak = get_streak()
@@ -95,3 +97,35 @@ elif page == "Dashboard":
 
         st.subheader("Calories per Meal:")
         st.bar_chart(today_summary['today_log'].set_index("dish")["calories"])
+
+elif page == "Photo Recognition":
+    st.header("Photo Recognition")
+    uploaded_file = st.file_uploader("Upload a photo of your food:", type=["jpg", "jpeg", "png"])
+    
+    if uploaded_file is not None:
+        st.image(uploaded_file, caption="Uploaded image", width=300)
+        
+        # Save temporarily to run prediction
+        with open("temp_image.jpg", "wb") as f:
+            f.write(uploaded_file.getbuffer())
+        
+        dish = predict_dish("temp_image.jpg")
+        st.success(f"Detected dish: {dish.replace('_', ' ').title()}")
+        
+        user_portion = st.number_input("How many grams did you eat?", min_value=1, value=100)
+        
+        if st.button("Get Nutrition Info"):
+            result = nutrition(dish, user_portion)
+            if result is None:
+                st.error("Sorry, we don't have nutrition info for this dish yet.")
+            else:
+                st.subheader(f"Nutrition info for {result['dish'].replace('_', ' ')} ({result['user_portion']}g):")
+                st.write(f"Calories: {result['calories']}")
+                st.write(f"Protein: {result['protein']}g")
+                st.write(f"Carbohydrates: {result['carbs']}g")
+                st.write(f"Fat: {result['fat']}g")
+                st.write(f"Halal: {result['halal']}")
+                st.write(f"Vegan: {result['vegan']}")
+                st.write(f"Vegetarian: {result['vegetarian']}")
+                st.write(f"Sikh Friendly: {result['sikh_friendly']}")
+                st.write(f"Fasting Friendly: {result['fasting_friendly']}")

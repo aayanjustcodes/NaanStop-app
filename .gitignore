@@ -216,3 +216,13 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Dataset folder - too large for github, collected locally
+dataset/
+
+# Trained model files - regenerate by running train_model.py
+model.pth
+class_labels.json
+
+# Temporary file for photo upload processing - not needed in repo
+temp_image.jpg
