@@ -1,77 +1,157 @@
 # NaanStop 🍛
 
-**Your desi nutrition tracker.**
+**A South Asian nutrition tracker built with Python, Streamlit, and PyTorch.**
 
-NaanStop is an AI-powered nutrition tracking app built specifically for South Asian cuisine — filling the gap that apps like MyFitnessPal leave for desi food. Most nutrition apps have poor or nonexistent databases for South Asian dishes. NaanStop is built from the ground up for this cuisine, with diet compatibility filtering for Halal, Vegetarian, Vegan, Sikh-friendly, and Ramadan fasting diets.
+NaanStop is a web application designed to make nutrition tracking more accessible for South Asian cuisine. It combines a curated food database, portion-based nutritional calculations, dietary filtering, meal tracking, and machine-learning-powered food image classification.
 
----
+**[Try the Live App](https://g3bw2p7fj6an6natmgbanb.streamlit.app/)**
 
-## Current Features (MVP — In Progress)
+## Features
 
-- **Nutrition Lookup** — search any desi dish, enter how many grams you ate, and get scaled calorie/macro information based on your actual portion
-- **Diet Filter** — filter dishes by dietary preference (Halal, Vegan, Vegetarian, Sikh-friendly, Fasting-friendly)
-- **Portion Scaling** — all nutrition data scales proportionally to your actual portion size, not just a fixed serving
-- **15 starter dishes** — biryani, dal, roti, samosa, butter chicken, palak paneer, dosa, idli, chole, paratha, gulab jamun, chicken tikka, rice, chicken karahi, lassi (expanding over time)
+### 🍽️ Nutrition Lookup
+- Browse 16 South Asian food entries.
+- Calculate estimated calories, protein, carbohydrates, and fat based on portion size in grams.
+- View dietary compatibility information for supported dishes.
 
----
+### 🥗 Dietary Filtering
+Filter the food database by:
+- Halal
+- Vegetarian
+- Vegan
+- Sikh-friendly
+- Fasting-friendly
+
+Dietary labels are based on the application's dataset and are not independently certified.
+
+### 📸 AI Food Recognition
+- Upload an image of a South Asian dish.
+- Classify the image using a PyTorch model based on MobileNetV2.
+- Supports seven food categories: biryani, butter chicken, chapati, chicken tikka, gulab jamun, lassi, and palak paneer.
+
+The classifier is experimental and predictions may be inaccurate.
+
+### 🎯 Personalized Calorie Targets
+- Estimate daily calorie requirements using age, weight, height, sex, and activity level.
+- Calculate an estimated daily target using a basal metabolic rate formula and activity multipliers.
+
+### 📊 Meal Logging and Dashboard
+- Record meals and their estimated nutritional values.
+- View daily calorie and macronutrient totals.
+- Visualize nutritional intake through dashboard charts.
+- Track consecutive days of meal logging.
+
+Meal data currently uses local CSV storage and is not associated with individual user accounts.
 
 ## Tech Stack
 
-- **Python 3.13**
-- **Streamlit** — web app UI
-- **Pandas** — data loading and filtering
-- **TensorFlow/Keras** — (coming in Phase 2) photo recognition model
-- **Deployed on** Streamlit Community Cloud (coming soon)
+| Technology | Purpose |
+|---|---|
+| Python | Application logic |
+| Streamlit | Interactive web interface |
+| Pandas | Food data processing and meal logging |
+| PyTorch | Model training and inference |
+| torchvision / MobileNetV2 | Transfer learning for food image classification |
+| CSV | Nutrition database and meal records |
+| Streamlit Community Cloud | Application deployment |
 
----
+## Getting Started
 
-## Setup (Local)
+### 1. Clone the repository
 
 ```bash
-# Clone the repo
 git clone https://github.com/aayanjustcodes/NaanStop-app.git
 cd NaanStop-app
+```
 
-# Create and activate virtual environment
+### 2. Create a virtual environment
+
+```bash
 python3 -m venv venv
-source venv/bin/activate  # Mac/Linux
-# venv\Scripts\activate   # Windows
+```
 
-# Install dependencies
-pip install streamlit tensorflow pandas numpy pillow scikit-learn
+On macOS/Linux:
 
-# Run the app
+```bash
+source venv/bin/activate
+```
+
+On Windows:
+
+```bash
+venv\Scripts\activate
+```
+
+### 3. Install dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+### 4. Run the application
+
+```bash
 streamlit run app.py
 ```
 
----
+Open the local Streamlit URL displayed in your terminal.
 
-## Phase 2 Roadmap
+## Machine Learning
 
-- **Photo recognition** — upload a photo of a desi dish, AI predicts what it is using a custom-trained TensorFlow model (transfer learning on MobileNetV2)
-- **User profile + calorie targets** — age, weight, height, activity level → personalized daily calorie goal using BMR formula
-- **Meal logging** — save what you ate each day, persists between sessions
-- **Consistency streak** — gamified daily logging streak to build habits
-- **Tracking dashboard** — charts showing calorie intake and weight trend over time
-- **Expanded food database** — more dishes, more granularity (chicken biryani vs veg biryani, plain rice vs biryani rice, individual ingredients like palak, paneer separately)
-- **Hormone cycle tracking** — cycle-aware nutrition and calorie adjustments
-- **Medical conditions survey** — short onboarding survey, expands over time with follow-up questions
+NaanStop uses a MobileNetV2-based image classifier implemented with PyTorch.
 
----
+The model was developed using transfer learning, with a pretrained feature extractor and a classification layer adapted to seven supported food categories.
 
-## Phase 3 Roadmap
+Training includes image resizing, data augmentation, and a training/validation split.
 
-- **CGM Integration (Dexcom API)** — connect to continuous glucose monitor data to track real-time blood sugar response to specific desi dishes; over time learns your personal glucose response to each food and gives personalized carb estimates based on YOUR data, not generic database numbers. Especially powerful for Type 1 and Type 2 diabetics managing diet around South Asian cuisine.
-- **Halal/dietary certification API** — integrate with halal certification databases for verified dish tagging
-- **Multi-user accounts + cloud database** — real authentication, data synced across devices
-- **Mobile app** — React Native or Flutter wrapper around the core logic
+The trained model weights are stored in `model.pth`, and class labels are defined in `class_labels.json`.
 
----
+**Current limitation:** The model recognizes only its supported classes, and its accuracy has not been independently established.
 
-## Why NaanStop?
+## Project Structure
 
-South Asian cuisine is eaten by over 1.5 billion people globally, yet nutrition apps treat it as an afterthought. Desi home-cooked meals are mixed dishes with regional variation and no standard portion sizes — impossible to track accurately with existing tools. NaanStop is built specifically for this gap.
+```text
+NaanStop-app/
+├── app.py
+├── nutrition.py
+├── filter.py
+├── user_profile.py
+├── meal_log.py
+├── dashboard.py
+├── streak_counter.py
+├── train_model.py
+├── predict.py
+├── food_data.csv
+├── class_labels.json
+├── model.pth
+├── requirements.txt
+└── README.md
+```
 
----
+## Known Limitations
 
-*Built by Aayan Ali, original concept: Aayan Ali, Roshan Srivatsan*
+- The food database currently contains 16 entries.
+- Nutritional values are estimates and may vary with ingredients, recipes, and portion preparation.
+- Image classification is limited to seven supported categories.
+- CSV-based meal storage is not a persistent, multi-user database.
+- The application does not currently support individual user accounts.
+
+## Future Improvements
+
+- Expand the food database with more regional dishes and recipe variations.
+- Improve and evaluate image-classification performance.
+- Introduce user accounts and persistent cloud-based storage.
+- Add more advanced nutrition insights and personalized tracking.
+
+## Motivation
+
+South Asian meals can be difficult to track using general-purpose nutrition applications because ingredients, preparation methods, and serving sizes vary widely.
+
+NaanStop explores how a cuisine-specific food database and machine learning can make everyday nutrition tracking more accessible.
+
+## Credits
+
+**Development:** Aayan Ali
+
+**Original concept:** Aayan Ali and Roshan Srivatsan
+
+Built as an independently developed portfolio project.
