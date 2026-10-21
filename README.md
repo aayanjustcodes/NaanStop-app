@@ -102,9 +102,11 @@ The application will open in your browser.
 ## Project Structure
 
 ```text
-NaanStop/
+NaanStop-app/
 ├── .streamlit/
 │   └── config.toml
+├── .gitignore
+├── README.md
 ├── app.py
 ├── nutrition.py
 ├── filter.py
@@ -113,10 +115,49 @@ NaanStop/
 ├── dashboard.py
 ├── streak_counter.py
 ├── predict.py
+├── train_model.py
+├── test.py
 ├── food_data.csv
-├── requirements.txt
-└── README.md
+├── meal_log.csv
+├── model.pth
+├── class_labels.json
+└── requirements.txt
 ```
+
+## Key Files
+
+app.py — Main Streamlit application, including the interface and navigation.
+
+nutrition.py — Calculates nutritional information based on food portions.
+
+filter.py — Filters dishes according to dietary preferences.
+
+user_profile.py — Calculates estimated daily calorie targets.
+
+meal_log.py — Handles meal logging.
+
+dashboard.py — Processes meal data for dashboard summaries.
+
+streak_counter.py — Tracks meal-logging consistency.
+
+predict.py — Uses the trained model to predict food categories from images.
+
+train_model.py — Contains the machine learning training pipeline.
+
+model.pth — Saved PyTorch model weights.
+
+class_labels.json — Maps model predictions to food categories.
+
+food_data.csv — South Asian food nutrition dataset.
+
+meal_log.csv — CSV-based meal records used by the MVP.
+
+test.py — Project test script.
+
+requirements.txt — Python dependencies.
+
+.streamlit/config.toml — Streamlit theme configuration.
+
 
 Additional model files and training artifacts may be required depending on the deployment configuration.
 
