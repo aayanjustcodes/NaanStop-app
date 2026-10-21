@@ -45,16 +45,17 @@ Navigate between features using NaanRing, a custom interface built with Streamli
 | CSV | Food dataset and MVP meal storage |
 | CSS | Custom interface styling |
 
+
 ## Screenshots
 
 ### Dashboard
-*Add a screenshot of the dashboard here.*
+![NaanStop Dashboard](dashboard.png)
 
 ### NaanRing Navigation
-*Add a screenshot of the navigation interface here.*
+![NaanRing Navigation](naanring.png)
 
-### Food Recognition
-*Add a screenshot of the image classification feature here.*
+### AI-Powered Food Recognition
+![NaanStop Photo Recognition](photorecognition.png)
 
 ## Getting Started
 
